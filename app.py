@@ -1,6 +1,7 @@
 import streamlit as st
 from streamlit_option_menu import option_menu
 from PIL import Image
+import cv2
 
 st.set_page_config(page_title="Detection", page_icon=None, layout="wide", initial_sidebar_state="auto", menu_items=None)
 
@@ -33,3 +34,6 @@ if selected == "Circle detect":
     image_upload = st.file_uploader("Guage meter image", type=['png', 'jpg'])
     if image_upload is not None:
         st.image(load_image(image_upload))
+        cv_image_read = cv2.imread(image_upload)
+        gray = cv2.cvtColor(cv_image_read, cv2.COLOR_BGR2GRAY)
+        st.image(gray)
