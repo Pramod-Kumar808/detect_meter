@@ -4,7 +4,7 @@ from PIL import Image
 
 st.set_page_config(page_title="Detection", page_icon=None, layout="wide", initial_sidebar_state="auto", menu_items=None)
 
-@cache
+@st.cache
 def load_image(image):
     image = Image.open(image)
     return image
@@ -29,7 +29,7 @@ selected = option_menu(
         },
     )
 
-if selected == "Circle detect":
+if selected == "Circle detect": 
     image_upload = st.file_uploader("Guage meter image", type=['png', 'jpg'])
     if image_upload is not None:
         st.image(load_image(image_upload))
