@@ -2,7 +2,7 @@ import streamlit as st
 from streamlit_option_menu import option_menu
 from PIL import Image
 import cv2
-import io
+import base64, os
 
 st.set_page_config(page_title="Detection", page_icon=None, layout="wide", initial_sidebar_state="auto", menu_items=None)
 
@@ -10,12 +10,11 @@ st.set_page_config(page_title="Detection", page_icon=None, layout="wide", initia
 def load_image(image):
     image = Image.open(image)
     return image
-@st.cache
-def convert_pil_image_to_byte_array(img):
-    img_byte_array = io.BytesIO()
-    img.save(img_byte_array, format='JPEG', subsampling=0, quality=100)
-    img_byte_array = img_byte_array.getvalue()
-    return img_byte_array
+
+def save_uploadedfile(uploadedfile):
+     with open(os.path.join("inputs",uploadedfile.name),"wb") as f:
+         f.write(uploadedfile.getbuffer())
+     return st.success("Saved File:{}".format(uploadedfile.name))
 
 selected = option_menu(
         menu_title="Detection Choice",
@@ -40,9 +39,9 @@ selected = option_menu(
 if selected == "Circle detect": 
     image_upload = st.file_uploader("Guage meter image", type=['png', 'jpg'])
     if image_upload is not None:
-        io.BytesIO()
-        st.image(load_image(image_upload))
-        # cv_image_read = cv2.imread(image_upload)
-        # gray = cv2.cvtColor(cv_image_read, cv2.COLOR_BGR2GRAY)
-        image_byte = convert_pil_image_to_byte_array(image_upload)
-        st.code(image_byte)
+       image = Image.open(image_upload)
+    #    save_uploadedfile(image_upload)
+    #    data = "inputs/" + image_upload.name
+    #    open_cv_read_image = cv2.imread(data)
+    #    gray_image = cv2.cvtColor(open_cv_read_image, cv2.COLOR_BGR2GRAY)
+       st.image(image)
