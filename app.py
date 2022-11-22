@@ -42,7 +42,7 @@ if selected == "Circle detect":
     if image_upload is not None:
         io.BytesIO()
         st.image(load_image(image_upload))
-        cv_image_read = cv2.imread(image_upload)
-        gray = cv2.cvtColor(cv_image_read, cv2.COLOR_BGR2GRAY)
+        # cv_image_read = cv2.imread(image_upload)
+        # gray = cv2.cvtColor(cv_image_read, cv2.COLOR_BGR2GRAY)
         image_byte = convert_pil_image_to_byte_array(image_upload)
         st.code(image_byte)
