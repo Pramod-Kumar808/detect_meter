@@ -1,6 +1,8 @@
 import streamlit as st
 from streamlit_option_menu import option_menu
 
+st.set_page_config(page_title="Detecttion", page_icon=None, layout="wide", initial_sidebar_state="auto", menu_items=None)
+
 selected = option_menu(
         menu_title="Detection Choice",
         options=["Circle_Detection", "Using CV NN", "Using Yolo"],  
