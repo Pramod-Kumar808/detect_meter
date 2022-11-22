@@ -1,11 +1,17 @@
 import streamlit as st
 from streamlit_option_menu import option_menu
+from PIL import Image
 
 st.set_page_config(page_title="Detecttion", page_icon=None, layout="wide", initial_sidebar_state="auto", menu_items=None)
 
+@__cached__
+def load_image(image):
+    image = Image.open(image)
+    return image
+
 selected = option_menu(
         menu_title="Detection Choice",
-        options=["Circle_Detection", "Using CV NN", "Using Yolo"],  
+        options=["Circle detect", "Using CV NN", "Using Yolo"],  
         icons=["house", "book", "envelope"],  
         menu_icon="cast",  
         default_index=0, 
@@ -22,3 +28,8 @@ selected = option_menu(
             "nav-link-selected": {"background-color": "green"},
         },
     )
+
+if selected == "Circle detect":
+    image_upload = st.file_uploader("Guage meter image", type=['png', 'jpg'])
+    if image_upload is not None:
+        st.image(load_image(image_upload))
