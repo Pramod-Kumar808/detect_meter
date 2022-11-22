@@ -1,10 +1,9 @@
 import streamlit as st
 from streamlit_option_menu import option_menu
 
-st.title("Application")
 selected = option_menu(
-        menu_title=None,
-        options=["Home", "Projects", "Contact"],  
+        menu_title="Detection Choice",
+        options=["Circle_Detection", "Using CV NN", "Using Yolo"],  
         icons=["house", "book", "envelope"],  
         menu_icon="cast",  
         default_index=0, 
@@ -21,4 +20,3 @@ selected = option_menu(
             "nav-link-selected": {"background-color": "green"},
         },
     )
-    
