@@ -39,9 +39,12 @@ selected = option_menu(
 if selected == "Circle detect": 
     image_upload = st.file_uploader("Guage meter image", type=['png', 'jpg'])
     if image_upload is not None:
-       image = Image.open(image_upload)
+        image = Image.open(image_upload)
     #    save_uploadedfile(image_upload)
     #    data = "inputs/" + image_upload.name
     #    open_cv_read_image = cv2.imread(data)
     #    gray_image = cv2.cvtColor(open_cv_read_image, cv2.COLOR_BGR2GRAY)
-       st.image(image)
+    #    st.image(image)
+        cv_image_read = cv2.imead(image)
+        gray_image = cv2.cvtColor(cv_image_read, cv2.COLOR_BGR2GRAY)
+        st.image(gray_image)
