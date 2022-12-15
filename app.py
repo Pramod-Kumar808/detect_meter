@@ -3,6 +3,9 @@ from streamlit_option_menu import option_menu
 from PIL import Image
 import cv2
 import base64, os
+import numpy as np
+from pythonping import ping
+import sys
 
 st.set_page_config(page_title="Detection", page_icon=None, layout="wide", initial_sidebar_state="auto", menu_items=None)
 
@@ -45,6 +48,14 @@ if selected == "Circle detect":
     #    open_cv_read_image = cv2.imread(data)
     #    gray_image = cv2.cvtColor(open_cv_read_image, cv2.COLOR_BGR2GRAY)
     #    st.image(image)
-        cv_image_read = cv2.imead(image)
-        gray_image = cv2.cvtColor(cv_image_read, cv2.COLOR_BGR2GRAY)
-        st.image(gray_image)
+        img_array = np.array(image)
+        image_read = Image.fromarray(img_array.astype(np.uint8))
+        open_cv_read_image = cv2.cvtColor(image_read, cv2.COLOR_BGR2GRAY)
+        st.image(open_cv_read_image)
+
+text = st.text_input("Type the ip address here")
+if text == "":
+    st.error("Input the text")
+else:
+    scan = ping('127.0.0.1', timeout = 1,count = 1, out = sys.stdout)
+    st.code(scan)
