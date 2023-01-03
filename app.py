@@ -1,23 +1,20 @@
 import streamlit as st
 from streamlit_option_menu import option_menu
-from PIL import Image
 import cv2
-import base64, os
 import numpy as np
-from pythonping import ping
-import sys
+import os
 
 st.set_page_config(page_title="Detection", page_icon=None, layout="wide", initial_sidebar_state="auto", menu_items=None)
 
-@st.cache
-def load_image(image):
-    image = Image.open(image)
-    return image
+# @st.cache
+# def load_image(image):
+#     image = Image.open(image)
+#     return image
 
-def save_uploadedfile(uploadedfile):
-     with open(os.path.join("inputs",uploadedfile.name),"wb") as f:
-         f.write(uploadedfile.getbuffer())
-     return st.success("Saved File:{}".format(uploadedfile.name))
+# def save_uploadedfile(uploadedfile):
+#      with open(os.path.join("inputs",uploadedfile.name),"wb") as f:
+#          f.write(uploadedfile.getbuffer())
+#      return st.success("Saved File:{}".format(uploadedfile.name))
 
 selected = option_menu(
         menu_title="Detection Choice",
@@ -42,20 +39,7 @@ selected = option_menu(
 if selected == "Circle detect": 
     image_upload = st.file_uploader("Guage meter image", type=['png', 'jpg'])
     if image_upload is not None:
-        image = Image.open(image_upload)
-    #    save_uploadedfile(image_upload)
-    #    data = "inputs/" + image_upload.name
-    #    open_cv_read_image = cv2.imread(data)
-    #    gray_image = cv2.cvtColor(open_cv_read_image, cv2.COLOR_BGR2GRAY)
-    #    st.image(image)
-        img_array = np.array(image)
-        image_read = Image.fromarray(img_array.astype(np.uint8))
-        open_cv_read_image = cv2.cvtColor(image_read, cv2.COLOR_BGR2GRAY)
-        st.image(open_cv_read_image)
-
-text = st.text_input("Type the ip address here")
-if text == "":
-    st.error("Input the text")
-else:
-    scan = ping('127.0.0.1', timeout = 1,count = 1, out = sys.stdout)
-    st.code(scan)
+        file_bytes = np.asarray(bytearray(image_upload.read()), dtype=np.uint8)
+        opencv_image = cv2.imdecode(file_bytes, 1)
+        opencv_image_gray = cv2.cvtColor(opencv_image, cv2.COLOR_BGR2GRAY)
+        st.image(opencv_image_gray)
